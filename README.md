@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/github/license/xsolla/data_fast_insights)](LICENSE)
+[![Python Version](https://img.shields.io/badge/Python-3.7%2B-blue)](https://img.shields.io/badge/Python-3.7%2B-blue)
+[![Version](https://img.shields.io/badge/version-0.2-blue)](https://img.shields.io/badge/version-0.2-blue)
 # Info
 **Data Fast Insights** is a library for quickly finding insights on given data or testing hypotheses.  
 Thus it can be used:
