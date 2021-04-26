@@ -1,0 +1,7 @@
+California housing dataset, which is used in the main README as well as in examples/housing_dataset_example.ipynb,
+was taken from http://lib.stat.cmu.edu/datasets/
+
+References
+
+    - Pace, R. Kelley and Ronald Barry, Sparse Spatial Autoregressions,
+      Statistics and Probability Letters, 33 (1997) 291-297

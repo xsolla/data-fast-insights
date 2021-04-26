@@ -1,0 +1,4 @@
+matplotlib>=3.2.1
+numpy>=1.18.2
+pandas>=1.0.3
+scorecardpy>=0.1.9.1.1
