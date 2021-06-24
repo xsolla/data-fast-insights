@@ -70,7 +70,7 @@ if OTHER_PLOTS:
     pass
     # SINGLE PLOT EXAMPLE
     fig, _ = plt.subplots()
-    plot_segments_dependence(dmd, res, 'color_green', 'high_perc', base_feature_rename='Color: Green',
+    plot_segments_dependence(dmd, res, 'color_green', 'group_importance', base_feature_rename='Color: Green',
                              resort='name_asc')
     fig.tight_layout()
 

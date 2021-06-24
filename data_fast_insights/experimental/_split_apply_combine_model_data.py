@@ -6,6 +6,7 @@ import pandas as pd
 
 from data_fast_insights import BinaryDependenceModelData
 from data_fast_insights.utils import exclude_zero_var, singular_experiment
+from data_fast_insights.calculations import calculate_dependence
 
 
 class SplitApplyCombineModelData(BinaryDependenceModelData):
@@ -22,6 +23,8 @@ class SplitApplyCombineModelData(BinaryDependenceModelData):
         self.cnt_excluded_by_feat = None
 
         self.total_res = None
+
+        self.default_calc = calculate_dependence(None)
 
     def split(self, dim_name: str):
         for p in self.base_data[dim_name].unique():
@@ -62,23 +65,17 @@ class SplitApplyCombineModelData(BinaryDependenceModelData):
         self.all_features = reduce(
             lambda x, y: set(x) | set(y), [r['res'].columns for r in self.exp_data_reports.values()])
 
-    @staticmethod
-    def _get_default_res(index: str):
-        # TODO: make it dependent on current columns of a res dataframe, in case it's changed
-        return pd.DataFrame.from_dict(
-            {'total_sum': 0, 'low_sum': 0, 'low_perc': 0, 'high_perc': 0, 'perc_of_total': 0,
-             'target_delta_perc': 0,
-             'base_col': '', 'base_breaks': list(), 'base_range': list(), 'base_cats': list()},
-            orient='index',
-            columns=[index])
-
     def fill_defaults(self):
         self.cnt_excluded_by_feat = {f: 0 for f in self.all_features}
         for p, data in self.exp_data_reports.items():
             merging = data['res'].copy()
 
             for diff in set(self.all_features).difference(set(merging.columns)):
-                merging = pd.merge(merging, self._get_default_res(diff), left_index=True, right_index=True)
+                # TODO inplace renaming
+                default_ = self.default_calc
+                default_.columns = [diff]
+
+                merging = pd.merge(merging, default_, left_index=True, right_index=True)
                 self.cnt_excluded_by_feat[diff] += 1
             self.exp_data_reports[p]['res'] = merging
 

@@ -10,12 +10,13 @@ if TYPE_CHECKING:
     from data_fast_insights import BinaryDependenceModelData
 
 
-def calculate_dependence(model_data: 'BinaryDependenceModelData') -> pd.DataFrame:
+def calculate_dependence(model_data: 'BinaryDependenceModelData' = None) -> pd.DataFrame:
     """ Calculate dependence on target for features in model_data
 
     Parameters
     ----------
     model_data
+        If not set, return a dataframe with a row of default values
 
     Returns
     -------
@@ -33,6 +34,9 @@ def calculate_dependence(model_data: 'BinaryDependenceModelData') -> pd.DataFram
             perc_of_total - segment share of total data, in percent (size of the segment, relative).
                 Total "perc_of_total" of all segments across one base (original) feature equals 1.
             target_delta_perc - how much target mean of this segment differs from total target mean, in percent
+            group_importance - relative segment size multiplied by difference of segment target from total target.
+                More precisely:
+                    (count_segment_objects/count_total_objects) * abs(avg(segment_target) - avg(total_target))
             base_col - parent feature for segment.
                 If the binary feature is a combination of multiple binary features,
                 it contains json array of parent binary features
@@ -40,6 +44,13 @@ def calculate_dependence(model_data: 'BinaryDependenceModelData') -> pd.DataFram
             base_range - min and max values of the parent feature (if parent feature is numeric)
             base_cats - all possible categories of the parent feature (if parent feature is categorical)
     """
+    if model_data is None:
+        return pd.DataFrame.from_dict(
+            {'total_sum': 0, 'low_sum': 0, 'low_perc': 0, 'high_perc': 0, 'perc_of_total': 0,
+             'target_delta_perc': 0, 'group_importance': 0,
+             'base_col': '', 'base_breaks': list(), 'base_range': list(), 'base_cats': list()},
+            orient='index')
+
     # if not model_data.is_data_converted:
     #     warnings.warn("""Features in model_data seem to not be converted to binary format yet,
     #     calculate_dependence() might return wrong output.
@@ -55,6 +66,7 @@ def calculate_dependence(model_data: 'BinaryDependenceModelData') -> pd.DataFram
     res_low['high_perc'] = 100 - res_low['low_perc']
     res_low['perc_of_total'] = (res_low['total_sum'] / model_data.data.shape[0]) * 100
     res_low['target_delta_perc'] = np.nan
+    res_low['group_importance'] = np.nan
 
     res_low['base_col'] = ''
     res_low['base_breaks'] = ''
@@ -69,6 +81,11 @@ def calculate_dependence(model_data: 'BinaryDependenceModelData') -> pd.DataFram
     for i, row in res_low.iterrows():
         res_low.at[i, 'target_delta_perc'] = ((model_data.data[model_data.data[i] == 1][model_data.y_name].mean() /
                                               model_data.data[model_data.y_name].mean()) - 1) * 100
+        res_low.at[i, 'group_importance'] = \
+            (model_data.data[model_data.data[i] == 1].shape[0] / model_data.data.shape[0]) * \
+            abs(model_data.data[model_data.data[i] == 1][model_data.y_name].mean() -
+                model_data.data[model_data.y_name].mean())
+
         if i in model_data.col_links:
             base_col = model_data.col_links[i]
             res_low.at[i, 'base_col'] = base_col
@@ -82,7 +99,6 @@ def calculate_dependence(model_data: 'BinaryDependenceModelData') -> pd.DataFram
                 res_low.at[i, 'base_cats'] = model_data.base_data[base_col].unique()
     res_low = res_low.sort_values(by='low_perc', ascending=False)
     return res_low
-
 
 def compare_intervals(selected: str, model_data: 'BinaryDependenceModelData') -> pd.DataFrame:
     """ Compare how changing certain values to other interval of same feature would affect the target.

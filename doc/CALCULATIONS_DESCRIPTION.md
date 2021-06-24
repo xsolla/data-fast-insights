@@ -42,6 +42,15 @@ and binary target variable equals 1 as well (so all the "bad" objects")
 ### Target variable
 Another calculated metric is average value of the target variable in each segment for each feature.
 
+### Group importance
+This metric calculates relative segment size multiplied by difference of segment target from total target.  
+More precisely:
+```
+(count_segment_objects/count_total_objects) * abs(avg(segment_target) - avg(total_target))
+```
+The goal of this metric is to consider both target difference and group size, 
+thus finding segments where impact on the target can be the highest.
+
 ### Other metrics
 Other important metrics are described in 
  [calculate_dependence() docstring](data_fast_insights/calculations/_modelling.py)
