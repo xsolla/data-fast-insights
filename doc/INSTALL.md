@@ -10,4 +10,9 @@ Data Fast Insights depends on:
 ```
 pip install git+https://github.com/xsolla/data_fast_insights.git
 ```
-If you have troubles installing this package, try upgrading its dependencies in your environment.
+If you have troubles installing this package, try upgrading its dependencies in your environment.  
+
+If there are problems with scorecardpy package, please try to install the latest version from source:
+```
+pip install git+git://github.com/shichenxie/scorecardpy.git
+``` 

@@ -1,3 +1,6 @@
+### 0.2.1 - 21 Apr 2021
+* Add group importance metric: see Calculated Metrics in [calculations description](data_fast_insights/doc/CALCULATIONS_DESCRIPTION.md)
+
 ### 0.2 - 21 Apr 2021
 * Overall documentation enrichment
 * Interpretability improvements 
