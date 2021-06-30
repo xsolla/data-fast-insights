@@ -1,13 +1,13 @@
 [![License](https://img.shields.io/github/license/xsolla/data_fast_insights)](LICENSE)
 [![Python Version](https://img.shields.io/badge/Python-3.7%2B-blue)](https://img.shields.io/badge/Python-3.7%2B-blue)
-[![Version](https://img.shields.io/badge/version-0.2.1-blue)](https://img.shields.io/badge/version-0.2.1-blue)
+[![Version](https://img.shields.io/badge/version-0.2.1.1-blue)](https://img.shields.io/badge/version-0.2.1.1-blue)
 
 # Info
 **Data Fast Insights** is a library for quickly finding insights on given data or testing hypotheses.  
 Thus it can be used:
  - to test how any features from a given set (as well as their combinations) affect target variable 
  and **find those which require attention and change the most**  
- - to test if a defined hypotheses is true or not  
+ - to test if a defined hypothesis is true or not  
 
 [What does the library calculate and how?](doc/CALCULATIONS_DESCRIPTION.md)
 
@@ -18,16 +18,7 @@ For any other questions please contact:
 - a.tolmachev@xsolla.com 
 
 # Installation  
-Installation instructions can be found [here](doc/INSTALL.md).
-
-# User guide
-:warning: Please read a [user guide](doc/USER_GUIDE.md) before using the library, 
-it contains important notes about data preparation.
-
-# Documentation  
-- Most functions have docstring and type hints describing its arguments and output.   
-- Columns of resulting dataframes are also described in corresponding docstrings.    
-- [doc](doc/) directory contains useful documentation on distinct parts of the library (they are noted in this README as well)  
+Installation instructions can be found [here](doc/INSTALL.md). 
 
 # Quickstart
 Let's look at the short example which uses core features of the library and outputs the report.  
@@ -108,6 +99,15 @@ _Green text and arrows are comments_
 #### Observations 
 2nd and 3rd plots show that there is a **significant drop of house value in blocks 
 located at Longitude from -121 up to -119** (not including -119), which requires further research.
+
+# User guide
+We recommend taking a look at the [user guide](doc/USER_GUIDE.md) before using the library, 
+it contains important notes about data preparation.
+
+# Documentation  
+- Most functions have docstring and type hints describing its arguments and output.   
+- Columns of resulting dataframes are also described in corresponding docstrings.    
+- [doc](doc/) directory contains useful documentation on distinct parts of the library (they are noted in this README as well) 
 
 # Other examples  
 - [Quickstart example in the Jupyter Notebook format](examples/housing_dataset_example.ipynb)
