@@ -7,7 +7,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name="data_fast_insights",
-    version="0.2.1",
+    version="0.2.1.1",
     author="p.gafiatullin; a.tolmachev",
     author_email="p.gafiatullin@xsolla.com",
     description="Library for using Data Fast Insights model on custom data.",
